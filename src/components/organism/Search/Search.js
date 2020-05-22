@@ -6,48 +6,42 @@ import ProductListEmpty from '../../molecule/ProductList/ProductListEmpty'
 import ProductList from '../../molecule/ProductList/ProductList'
 import Input from '../../atom/input/Input'
 
-class Search extends React.Component {
-    constructor() {
-        super()
+function Search(props){
 
-        this.state = {
-            resultsData: []
-        } 
-    }
+    const [resultsData, setResultsData] = React.useState([])
 
-    handleChange = event => {
+    const handleChange = event => {
         event.preventDefault()
 
         let resultsData = []
-        const productStore = this.props.catalogStore
+        const productStore = props.catalogStore
         const str = event.target.value.toLowerCase()
 
         productStore.map( elemnt => {
             return (elemnt.name.toLowerCase().includes(str)) ? resultsData.push(elemnt) : null
         })
 
-        this.setState((str.length > 0) ? { resultsData: resultsData } : { resultsData: [] })
+        setResultsData((str.length > 0) ?  resultsData  : [] )
     }
 
-    render() {
-    
-        return(
-            <div className="search">
-                <div className="search__form">
-                    <Input className="search__input" type="text" placeholder="Buscar por produto..." handleChange={event => this.handleChange(event)} />
-                </div>
-                <div className="product__list">
-                    {(this.state.resultsData.length === 0) ? <ProductListEmpty /> : 
-                     this.state.resultsData.map( (elemnt, index) => { 
-                        return(
-                            <ProductList key={index} product={elemnt} />
-                        )
-                    })}
-                </div>  
 
+    return(
+        <div className="search">
+            <div className="search__form">
+                <Input className="search__input" type="text" placeholder="Buscar por produto..." handleChange={event => handleChange(event)} />
             </div>
-        )
-    }
+            <div className="product__list">
+                {( resultsData.length === 0) ? <ProductListEmpty /> : 
+                    resultsData.map( (elemnt, index) => { 
+                    return(
+                        <ProductList key={index} product={elemnt} />
+                    )
+                })}
+            </div>  
+
+        </div>
+    )
+
 }
 
 const mapStateToProps = store => ({ catalogStore: store.productsApiReducer.catalog })

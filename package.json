@@ -13,13 +13,16 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
-    "redux-localstore": "^0.4.0"
+    "redux-localstore": "^0.4.0",
+    "redux-mock-store": "^1.5.4",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "submit": "react-scripts test src/__tests__/submit.test.js --reporters=default --reporters=jest-junit"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^7.5.2",
     "redux-devtools": "^3.5.0"
   }
 }
