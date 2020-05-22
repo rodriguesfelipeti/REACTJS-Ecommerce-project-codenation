@@ -1,5 +1,5 @@
 import React from 'react'
-import Products from '../organism/Products/Products'
+import Products from '../../components/organism/Products/Products'
 
 
 function ProductsTemplate() {

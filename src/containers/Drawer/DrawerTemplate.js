@@ -2,10 +2,9 @@ import React from 'react'
 import { connect } from 'react-redux';
 
 import './DrawerTemplate.css'
-import '../organism/Header/Header.css'
-import HeaderDrower from '../molecule//HeaderDrawer/HeaderDrawer'
-import Search from '../organism/Search/Search'
-import Cart from '../organism/Cart/Cart'
+import HeaderDrower from '../../components/molecule/HeaderDrawer/HeaderDrawer'
+import Search from '../../components/organism/Search/Search'
+import Cart from '../../components/organism/Cart/Cart'
 
 function DrawerTemplate(props) {
 
