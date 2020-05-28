@@ -1,48 +1,63 @@
 import React from 'react';
-import { render, cleanup } from '@testing-library/react';
-import { Provider } from "react-redux";
+import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux';
+import { Store } from '../redux/store';
+	
+import Header from '../components/organism/Header/Header'
+import Products from '../components/organism/Products/Products'
+import Product from '../components/molecule/Product/Product'
+import SingleProduct from '../components/organism/SingleProduct/SingleProduct'
 
-import App from '../App'
+describe('Should Render Header Components', () => {
+	const { getByTestId } = render(<Provider store={Store}><Header /></Provider>);
+	const container = getByTestId('header')
+	const btnSerch = getByTestId('btnSearch')
+	const btnCart = getByTestId('btnCart')
 
-afterEach(cleanup)
+	it('Should render Header', () => {
 
-describe('Contacts APP', () => {
-	it('Sould render App Component', () => {
+		expect(container).toHaveClass('header')
+		expect(container.children.length).toBe(1)
+	})
+	it('Should render Buttons', () => {
 
-		// const { getByTestId, getByTest } = render(<App />)
-		expect(true).toBe(true)
-	});
-		// expect(container.children.length).toBe(7);
-	// it('Should render Contact component', () => {
-	// 	const { getByTestId } = render(<Contact data={mockUserData}/>);
-	// 	const container = getByTestId('contact');
+		expect(btnSerch).toHaveClass('header__icons--search')
+		expect(btnCart).toHaveClass('header__icons--cart')
+	})
+})
 
-	// 	expect(container).toHaveClass('contact');
-	// 	expect(container.children.length).toBe(7);
-	// });
 
-	// it('Should render Contacts component', () => {
-	// 	const { getByTestId } = render(<Contacts />);
-	// 	const container = getByTestId('contacts');
+describe('Shold Render Products Components', () => {
 
-	// 	expect(container).toHaveClass('container');
-	// 	expect(container.children.length).toBe(1);
-	// });
+	const mockProduct = {
+		name: "",
+		actual_price: "",
+		discount_percentage: "",
+		image: "",
+		installments: "",
+		on_sale: false,
+		regular_price: "",
+		sizes: [],
+	}
 
-	// it('Should render Filters component', () => {
-	// 	const { getByTestId } = render(<Filters />);
-	// 	const container = getByTestId('filters');
+	it('Should render Products', () => {
+		const { getByTestId } = render(<Provider store={Store}><Products /></Provider>)
+		const container = getByTestId('products')
+		expect(container).toHaveClass('products')
+	})
 
-	// 	expect(container).toHaveClass('container');
-	// 	expect(container.children.length).toBe(1);
-	// });
+	it('Should render Product', () => {
+		const { getByTestId } = render(<Provider store={Store}><BrowserRouter><Product product={mockProduct}/></BrowserRouter></Provider>)
+		const container = getByTestId('products__box')
+		expect(container).toHaveClass('products__box')
+	})
+	
+	it('Should render SingleProduct', () => {
+		const { getByTestId } = render(<Provider store={Store}><SingleProduct /></Provider>)
+		const container = getByTestId('single-product')
+		expect(container).toHaveClass('single-product')
 
-	// it('Should render Topbar component', () => {
-	// 	const { getByTestId } = render(<Topbar />);
-	// 	const container = getByTestId('topbar');
+	})
 
-	// 	expect(container).toHaveClass('topbar');
-	// 	expect(container.children.length).toBe(1);
-	// });
-});
-
+})

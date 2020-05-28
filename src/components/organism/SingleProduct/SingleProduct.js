@@ -1,18 +1,18 @@
-import React from 'react'
-import { bindActionCreators } from 'redux';
+import React, { useState } from 'react'
 import { cartReducer } from '../../../redux/actions';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './SingleProduct.css'
-
 
 import Figure from '../../atom/figure/Figure'
 import Button from '../../atom/button/Button'
 
-function SingleProduct(props) {
+function SingleProduct() {
 
-    const [btnClicked, setBtnClicked] = React.useState(false)
-    const [btnKart, setBtnKart] = React.useState(false)
-    const product = props.seletedItem
+    const dispatch = useDispatch()
+    const [btnClicked, setBtnClicked] = useState(false)
+    const [btnKart, setBtnKart] = useState(false)
+    const product = useSelector( store => store.windowStateReducer.seletedSingleProduct )
+    const cart = useSelector( store => store.cartReducer.cart )
 
     const renderSizesBtn = (size, index) => {
         return (size.available) ? <Button key={index} 
@@ -29,7 +29,6 @@ function SingleProduct(props) {
     const addToKart = (event, product) => {
         event.preventDefault()
         setBtnKart(true)
-        const cart = props.cart
         let indexElmnt = false
         product.qtd = 1
         cart.map( (item, index) => {
@@ -41,13 +40,13 @@ function SingleProduct(props) {
         
         if(btnClicked) {
             product.sizeSelected = btnClicked
-            props.cartReducer(product, indexElmnt)
+            dispatch(cartReducer(product, indexElmnt))
         }
         
     }     
 
     return(
-        <div className="single-product">
+        <div className="single-product" data-testid="single-product">
         <Figure image={(product.image) ? product.image : "https://via.placeholder.com/470x594/FFFFFF/?text=Imagem+Indisponível"}alt={product.name}/>
         <div className="product__content">
             <h3 className="product__name">{product.name}</h3>
@@ -56,7 +55,7 @@ function SingleProduct(props) {
                 <p className="product__sizes__title">Escolha o tamanho</p>
                 {(btnKart && !btnClicked) ? <p className="product__sizes__warning">É necessário escolher um tamanho</p> : false }
                 <div className="product__btn-group">
-                    {product.sizes.map( (size, index) => 
+                    {product.sizes && product.sizes.map( (size, index) => 
                         renderSizesBtn(size, index)
                     )}
                 </div>
@@ -72,6 +71,4 @@ function SingleProduct(props) {
     )
 }
     
-const mapStateToProps = store => ({ cart: store.cartReducer.cart, seletedItem: store.windowStateReducer.seletedSingleProduct}); 
-const mapDispatchToProps = dispatch => bindActionCreators({ cartReducer }, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct);
+export default SingleProduct

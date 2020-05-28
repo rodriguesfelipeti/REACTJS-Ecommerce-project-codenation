@@ -1,23 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { bindActionCreators } from 'redux';
 import { storeSelectedSingleProduct } from '../../../redux/actions';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import './Product.css'
 
 import Figure from '../../atom/figure/Figure'
 
-function Product(props) {
+const Product = (props) => {
 
-    const product = props.product
+    const [product, setProduct] = useState({})
     
+    useEffect(() => {
+        setProduct(props.product)
+    },[props.product])
+
+    const dispatch = useDispatch()
     const handleClick = product => {
-        props.storeSelectedSingleProduct(product)
+        dispatch(storeSelectedSingleProduct(product))
     }
 
     return(
-        <div className="products__box">
-            <Link onClick={event => handleClick(product)} to={{ 
+        <div className="products__box" data-testid="products__box">
+            <Link onClick={() => handleClick(product)} to={{ 
                 pathname: '/produto',
                 productProps: props
             }}>
@@ -32,6 +36,4 @@ function Product(props) {
     
 }
     
-const mapStateToProps = store => ({ storeSelectedSingleProduct: store.windowStateReducer.seletedSingleProduct }); 
-const mapDispatchToProps = dispatch => bindActionCreators({ storeSelectedSingleProduct }, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(Product);
+export default Product;

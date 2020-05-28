@@ -4,6 +4,7 @@ import { defineState } from 'redux-localstore'
 const defaultState = {
     supportWindow: false,
     seletedSingleProduct: false
+  
 };
 const initialState = defineState(defaultState)('windowStateReducer')
 export const windowStateReducer = (state = initialState, action) => {

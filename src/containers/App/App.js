@@ -1,17 +1,20 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom'
 import './App.css';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 /** Components' */
 import Routes from '../../routes'
-import Header  from '../../components/organism/Header/Header'
+import Header  from '../../components/organism/Header/Header'   
 import DrawerTemplate from '../Drawer/DrawerTemplate'
 
-function App(state) {
+
+function App() {
+
+  const { supportWindow } = useSelector(state => state.windowStateReducer) 
   return (
     <React.Fragment>
-      <div className={state.supportWindow ? 'app app--is-drawer-visible' : 'app'} data-testid="app"> 
+      <div className={supportWindow ? 'app app--is-drawer-visible' : 'app'} data-testid="app"> 
         <Header />
         <BrowserRouter>
           <Routes />
@@ -22,8 +25,4 @@ function App(state) {
   )
 }
 
-const mapStateToProps = store => ({ 
-  supportWindow: store.windowStateReducer.supportWindow,
-})
-
-export default connect(mapStateToProps)(App)
+export default App
