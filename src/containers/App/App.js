@@ -9,7 +9,7 @@ import Header  from '../../components/organism/Header/Header'
 import DrawerTemplate from '../Drawer/DrawerTemplate'
 
 
-function App() {
+const App = () => {
 
   const { supportWindow } = useSelector(state => state.windowStateReducer) 
   return (

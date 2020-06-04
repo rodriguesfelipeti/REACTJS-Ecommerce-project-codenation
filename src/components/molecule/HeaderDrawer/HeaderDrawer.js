@@ -1,14 +1,14 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { windowStateReducer } from '../../../redux/actions'
-import { bindActionCreators } from 'redux';
 import Button from '../../atom/button/Button'
 
-function HeaderDrower(props) {
-    
+const HeaderDrower = ({ children }) => {
+
+    const dispatch = useDispatch()
     const handleClick = event => {
         event.preventDefault()
-        props.windowStateReducer(false)
+        dispatch(windowStateReducer(false))
     }
 
         return(
@@ -24,13 +24,12 @@ function HeaderDrower(props) {
                                 <canvas height="0" width="0" styles="border-radius: inherit; height: 100%; left: 0px; position: absolute; top: 0px; width: 100%;"></canvas>
                             </Button>
                         </div>
-                        {props.children}
+                        {children}
                     </div>
                 </div>
             </header>
         )
 }
 
-const mapStateToProps = store => ({ supportWindow: store.windowStateReducer.supportWindow })
-const mapDispatchToProps = dispatch => bindActionCreators({ windowStateReducer }, dispatch);
-export default connect(mapStateToProps,mapDispatchToProps)(HeaderDrower)
+
+export default HeaderDrower

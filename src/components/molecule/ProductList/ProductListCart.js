@@ -1,31 +1,29 @@
 import React from 'react'
-import { bindActionCreators } from 'redux';
-import { cartReducer, incrementCart, decrementCart, removeItemCart } from '../../../redux/actions';
-import { connect } from 'react-redux';
+import { incrementCart, decrementCart, removeItemCart } from '../../../redux/actions';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Button from '../../atom/button/Button'
 import Figure from '../../atom/figure/Figure'
 
-function ProductListCart(props) {
+const ProductListCart = ( props ) => {
     
+    const dispatch = useDispatch()
+    const { totalCart } = useSelector(state => state.cartReducer)
     const product = props.product
 
     const addQtdCartItem = (event, index) => {
         event.preventDefault()
-
-        props.incrementCart(index)
+        dispatch(incrementCart(index))
     }
     
     const removeQtdCartItem = (event, index) => {
         event.preventDefault()
-    
-        props.decrementCart(index)
+        dispatch(decrementCart(index))
     }
 
     const removeCartItem = (event, index) => {
         event.preventDefault()
-
-        props.removeItemCart(index)
+        dispatch(removeItemCart(index))
     }   
 
     const formatTotalPrice = value => {
@@ -71,14 +69,12 @@ function ProductListCart(props) {
                     </div>
                 </div>
             </div>
-            <div className="cart__subtotal"><div className="header__title">Subtotal - R$ { formatTotalPrice(props.totalCart) }</div></div>
+            <div className="cart__subtotal"><div className="header__title">Subtotal - R$ { formatTotalPrice(totalCart) }</div></div>
         </div> 
             
     )
 } 
 
-const mapStateToProps = store => ({ cart: store.cartReducer.cart, totalCart: store.cartReducer.totalCart })
-const mapDispatchToProps = dispatch => bindActionCreators({ cartReducer, incrementCart, removeItemCart, decrementCart }, dispatch);
-export default connect(mapStateToProps, mapDispatchToProps)(ProductListCart);
+export default ProductListCart
   
   

@@ -6,7 +6,7 @@ import './Products.css'
 /** Components */
 import Product from '../../molecule/Product/Product'
 
-function Products() {
+const Products = () => {
 
     const dispatch = useDispatch()
     const { catalog } = useSelector( store => store.productsApiReducer )

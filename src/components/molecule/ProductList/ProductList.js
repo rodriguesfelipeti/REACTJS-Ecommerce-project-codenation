@@ -1,19 +1,21 @@
 import React from 'react'
 import { windowStateReducer, storeSelectedSingleProduct  } from '../../../redux/actions'
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Link } from 'react-router-dom'
 import Figure from '../../atom/figure/Figure'
 
-function ProductList(props) {
-    
+const ProductList = (props) => {
+
+    const { supportWindow } = useSelector(state => state.windowStateReducer)
+    const dispatch = useDispatch()
+
     const product = props.product
     const handleClick = product => {
-        if(props.supportWindow) {
-            props.windowStateReducer(false)
+        if(supportWindow) {
+            dispatch(windowStateReducer(false))
           }
-        props.storeSelectedSingleProduct(product)
+        dispatch(storeSelectedSingleProduct(product))
     }
 
     return(
@@ -38,6 +40,4 @@ function ProductList(props) {
     )
 }
 
-const mapStateToProps = store => ({ supportWindow: store.windowStateReducer.supportWindow, storeSelectedSingleProduct: store.windowStateReducer.seletedSingleProduct })
-const mapDispatchToProps = dispatch => bindActionCreators({ windowStateReducer , storeSelectedSingleProduct }, dispatch);
-export default connect( mapStateToProps , mapDispatchToProps )(ProductList)
+export default ProductList

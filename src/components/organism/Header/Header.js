@@ -8,7 +8,7 @@ import './Counter.css'
 /** Components */
 import Button from '../../atom/button/Button'
 
-function Header() {
+const Header = () => {
 
     const { cart } = useSelector(store => store.cartReducer)
     const dispatch = useDispatch()

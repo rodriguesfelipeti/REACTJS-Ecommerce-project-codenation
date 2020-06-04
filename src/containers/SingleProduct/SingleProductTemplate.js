@@ -1,7 +1,7 @@
 import React from 'react'
 import SingleProduct from '../../components/organism/SingleProduct/SingleProduct'
 
-function SingleProductTemplate() {
+const SingleProductTemplate = () => {
   return(
     <SingleProduct />
   )

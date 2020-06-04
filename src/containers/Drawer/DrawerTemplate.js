@@ -1,26 +1,26 @@
 import React from 'react' 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import './DrawerTemplate.css'
 import HeaderDrower from '../../components/molecule/HeaderDrawer/HeaderDrawer'
 import Search from '../../components/organism/Search/Search'
 import Cart from '../../components/organism/Cart/Cart'
 
-function DrawerTemplate(props) {
+const DrawerTemplate = () => {
 
+    const { supportWindow } = useSelector(state => state.windowStateReducer)
     return(
-        <div className={props.supportWindow ? 'drawer drawer--is-visible' : 'drawer'}>
+        <div className={supportWindow ? 'drawer drawer--is-visible' : 'drawer'}>
             <HeaderDrower>
-                <div className="header__title">{props.supportWindow === 'search' ? 'Buscar Produtos' : 'Sacola (0) '}</div>
+                <div className="header__title">{supportWindow === 'search' ? 'Buscar Produtos' : 'Sacola (0) '}</div>
             </HeaderDrower>
             <div className="drawer__content">
-                {props.supportWindow === 'search' ? <Search /> : 
-                props.supportWindow === 'cart' ? <Cart />
-                : false}    
+                {supportWindow === 'search' ? <Search /> : 
+                 supportWindow === 'cart' ? <Cart />
+                 : false}    
             </div>
         </div>
     )
 }
-const mapStateToProps = store => ({ supportWindow: store.windowStateReducer.supportWindow })
-export default connect(mapStateToProps)(DrawerTemplate)
+export default DrawerTemplate
   

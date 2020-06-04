@@ -6,7 +6,7 @@ import './SingleProduct.css'
 import Figure from '../../atom/figure/Figure'
 import Button from '../../atom/button/Button'
 
-function SingleProduct() {
+const SingleProduct = () => {
 
     const dispatch = useDispatch()
     const [btnClicked, setBtnClicked] = useState(false)

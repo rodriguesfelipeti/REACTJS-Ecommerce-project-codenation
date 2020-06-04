@@ -1,14 +1,16 @@
 import React from 'react'
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
-function ProductListEmpty(props) {
+const ProductListEmpty = () => {
+
+    const { supportWindow } = useSelector(state => state.windowStateReducer)
+
     return(
-        <span className="cart__empty">{props.supportWindow === "search" ? "Nenhum item encontrado :(" :
-                                        props.supportWindow === "cart" ? "Sua sacola está vazia :(" : false } 
+        <span className="cart__empty">{ supportWindow === "search" ? "Nenhum item encontrado :(" :
+                                        supportWindow === "cart" ? "Sua sacola está vazia :(" : false } 
         </span>
     )
 }
 
-const mapStateToProps = store => ({ supportWindow: store.windowStateReducer.supportWindow })
-export default connect( mapStateToProps )(ProductListEmpty)
+export default ProductListEmpty
